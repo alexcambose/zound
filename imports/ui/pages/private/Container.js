@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Proptypes from 'proptypes';
 
-class Register extends Component {
+class Container extends Component {
     state = {};
-    propTypes = {};
-    defaultProps = {};
+    static propTypes = {};
+    static defaultProps = {};
     render = () => {
         return (
             <div>a</div>
@@ -12,4 +11,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default Container;
