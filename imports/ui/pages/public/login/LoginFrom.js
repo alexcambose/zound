@@ -9,8 +9,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 class LoginFrom extends Component {
     state = {
-        email: '',
-        password: '',
+        email: 'alexcambose@yahoo.com',
+        password: '12345',
         showPassword: false,
         error: '',
     };
@@ -22,12 +22,13 @@ class LoginFrom extends Component {
 
         Meteor.loginWithPassword(email, password, err => {
             if(err) this.setState({ error: err.reason });
+            // will redirect
         })
     };
     render = () => {
         const { email, password, showPassword, error } = this.state;
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <TextField
                     id="email"
                     type="email"

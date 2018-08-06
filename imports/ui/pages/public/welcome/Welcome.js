@@ -6,8 +6,8 @@ class Welcome extends Component {
     render = () => {
         return (
             <Fragment>
-                <Link to="/login"><Button variant="contained" size="large" color="primary" className="fullwidth">Login</Button></Link>
-                <Link to="/regster"><Button variant="contained" size="large" color="primary" className="fullwidth">Register</Button></Link>
+                <Button variant="contained" size="large" color="primary" className="fullwidth" component={Link} to="/login">Login</Button>
+                <Button variant="contained" size="large" color="primary" className="fullwidth" component={Link} to="/register">Register</Button>
             </Fragment>
         );
     }

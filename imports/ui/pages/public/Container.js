@@ -9,6 +9,6 @@ export default ({ children }) =>
     >
         <Grid item xs={3}/>
         <Grid item xs={6}>
-            <Paper className='padding-10'><Grid container justify="center">{children}</Grid></Paper>
+            <Paper className='padding-10'><Grid container direction="column" justify="center">{children}</Grid></Paper>
         </Grid>
     </Grid>;

@@ -8,11 +8,11 @@ import FormHelperText from '@material-ui/core/FormHelperText/';
 
 class RegisterForm extends Component {
     state = {
-        firstName: 'ALex',
+        firstName: 'Alex',
         lastName: 'Cambose',
-        email: 'alexcambose@yhoo.com',
+        email: 'alexcambose@yahoo.com',
         password: '1234',
-        cpassword: '12345',
+        cpassword: '1234',
         showPassword: false,
         showCPassword: false,
         error: '',
@@ -30,7 +30,7 @@ class RegisterForm extends Component {
             profile: { firstName, lastName }
         }, (err, res) => {
             if(err) this.setState({ error: err.reason });
-            //will redirect
+            // will redirect
         });
     };
     render = () => {

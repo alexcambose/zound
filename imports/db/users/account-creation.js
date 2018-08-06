@@ -1,7 +1,12 @@
+import fs from 'fs';
+
+
 Accounts.onCreateUser((options, user) => {
-    const { firstName, lastName } = options;
+    const { profile: { firstName, lastName } } = options;
     user.profile = {};
-    user.firstName = firstName;
-    user.lastName = lastName;
+    user.profile.firstName = firstName;
+    user.profile.lastName = lastName;
+    user.profile.image = 'default-user-image.png';
+    user.asd = 'asd'; // very important asd, kidding
     return user;
 });
