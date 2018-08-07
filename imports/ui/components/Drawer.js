@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { withStyles, SwipeableDrawer, ListItemIcon, List, Icon, ListItemText, Divider, ListItem, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { withStyles,Button, SwipeableDrawer, ListItemIcon, List, Icon, ListItemText, Divider, ListItem, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
-const styles = {
+const styles = theme => ({
     drawerWidth: {
         width: 320,
     },
@@ -13,7 +14,7 @@ const styles = {
     },
     drawerHeader: {
         fontFamily: 'Roboto',
-        height: 140,
+        height: 150,
         padding: 16,
         backgroundColor: '#2196f3',
         color: '#fff',
@@ -30,8 +31,17 @@ const styles = {
         height: 50,
         width: 50,
         marginBottom: 10,
+    },
+    createParty: {
+        marginLeft: 'auto',
+    },
+    appBar: {
+        marginBottom: 20,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
     }
-};
+});
 
 const TopList = () => (
     <Fragment>
@@ -57,7 +67,7 @@ const TopList = () => (
 
 class Drawer extends Component {
     state = {
-        opened: true,
+        opened: false,
     };
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -68,7 +78,7 @@ class Drawer extends Component {
         const { classes, user } = this.props;
         return (
             <Fragment>
-                <AppBar position="static">
+                <AppBar position="static" className={classes.appBar}>
                     <Toolbar>
                         <IconButton onClick={this.toggleDrawer(true)} color="inherit" className={classes.menuButton}>
                             <Icon>menu</Icon>
@@ -76,6 +86,7 @@ class Drawer extends Component {
                         <Typography variant="title" color="inherit">
                             Mance
                         </Typography>
+                        <Button component={Link} to="/create-party" variant="raised" color="primary" className={classes.createParty}>Create Party <Icon className={classes.rightIcon}>add</Icon></Button>
                     </Toolbar>
                 </AppBar>
                 <SwipeableDrawer
@@ -93,7 +104,7 @@ class Drawer extends Component {
                         <div className={classes.drawerHeader}>
                             <img className={classes.drawerHeaderImage} src={'/' + user.profile.image}/>
                             <div className={classes.drawerHeaderName}>{user.profile.firstName} {user.profile.lastName}</div>
-                            <div className={classes.drawerHeaderEmail}>{user.emails[0].address}</div>
+                            <div>{user.emails[0].address || ''}</div>
                         </div>
                         <TopList/>
                     </div>

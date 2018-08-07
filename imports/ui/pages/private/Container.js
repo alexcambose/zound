@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Drawer from '../../components/Drawer';
 
 export default ({ children }) =>
 <Fragment>
-    <Drawer/>
     <Grid
         container
         alignItems='center'

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
 import { Router, Route, Switch } from 'react-router';
 import createHashHistory from 'history/createBrowserHistory';
@@ -8,6 +8,7 @@ import publicRoutes from '/imports/ui/routes/public';
 import privateContainer from '/imports/ui/pages/private/Container';
 import publicContainer from '/imports/ui/pages/public/Container';
 import { Redirect } from 'react-router-dom';
+import Drawer from './components/Drawer';
 
 const history = createHashHistory();
 
@@ -19,19 +20,28 @@ class App extends Component {
         const { user } = this.props;
         const Container = user ? privateContainer : publicContainer;
         return (
-            <Container>
                 <Switch>
-                {(this.props.user ? privateRoutes : publicRoutes).map((props, i) => <Route exact key={i} {...props}/>)}
-                <Route path="/*" render={() => <Redirect to="/"/>}/>
+                    {(user ? privateRoutes : publicRoutes).map(({ inContainer, component, ...props}, i) => {
+                        const Component = component;
+                        if(inContainer){
+                            return <Route key={i} exact {...props} render={props => <Container><Component {...props}/></Container>}/>;
+                        }
+                        return <Route key={i} exact {...props} component={component} />;
+
+                    })}
+                    <Route path="/*" render={() => <Redirect to="/"/>}/>
                 </Switch>
-            </Container>
         );
     };
     render = () => {
-        if(this.props.user === undefined) return null;
+        const { user } = this.props;
+        if(user === undefined) return null;
         return (
             <Router history={history}>
-                {this.createRoutes()}
+                <Fragment>
+                    {user && <Drawer/>}
+                        {this.createRoutes()}
+                </Fragment>
             </Router>
         );
     }
