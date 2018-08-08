@@ -19,3 +19,5 @@ export const genres = [
     'Reggae',
     'Rock',
 ];
+
+export const lastFMAPIKEY = '622444b2397f3744d59e01c35bf1f455';

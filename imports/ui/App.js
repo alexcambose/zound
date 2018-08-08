@@ -24,9 +24,9 @@ class App extends Component {
                     {(user ? privateRoutes : publicRoutes).map(({ inContainer, component, ...props}, i) => {
                         const Component = component;
                         if(inContainer){
-                            return <Route key={i} exact {...props} render={props => <Container><Component {...props}/></Container>}/>;
+                            return <Route key={i} {...props} render={props => <Fragment>{user && <Drawer {...props}/>}<Container><Component {...props}/></Container></Fragment>}/>;
                         }
-                        return <Route key={i} exact {...props} component={component} />;
+                        return <Route key={i} {...props} render={props => <Fragment>{user && <Drawer {...props}/>}<Component {...props}/></Fragment>} />;
 
                     })}
                     <Route path="/*" render={() => <Redirect to="/"/>}/>
@@ -39,7 +39,7 @@ class App extends Component {
         return (
             <Router history={history}>
                 <Fragment>
-                    {user && <Drawer/>}
+
                         {this.createRoutes()}
                 </Fragment>
             </Router>

@@ -10,6 +10,7 @@ class CreatePartyForm extends Component {
         genre: [],
         startDate: new Date,
         endDate: new Date,
+        password: '',
         error: '',
     };
     handleChange = name => ({ target }) => this.setState({[name]: target.value});
@@ -24,7 +25,7 @@ class CreatePartyForm extends Component {
         })
     };
     render = () => {
-        const { title, description, genre, startDate, endDate, error } = this.state;
+        const { title, description, genre, startDate, endDate, error, password } = this.state;
         return (
             <form onSubmit={this.handleSubmit}>
 
@@ -104,6 +105,22 @@ class CreatePartyForm extends Component {
                         onChange={this.handleChange('endDate')}
                     />
                 </FormControl>
+                <TextField
+                    id="password"
+                    type="text"
+                    fullWidth
+                    label="Join password"
+                    value={password}
+                    onChange={this.handleChange('password')}
+                    margin="normal"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Icon>dialpad</Icon>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
                 <Button variant="contained" fullWidth type="submit">Register</Button>
                 {error && <FormHelperText error>{error}</FormHelperText>}
             </form>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Proptypes from 'proptypes';
+import PropTypes from 'proptypes';
 import { Meteor } from 'meteor/meteor';
 
 class Logout extends Component {

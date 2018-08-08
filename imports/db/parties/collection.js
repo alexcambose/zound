@@ -4,6 +4,13 @@ import SimpleSchema from 'simpl-schema';
 const Parties = new Mongo.Collection('parties');
 
 const PartiesSchema = new SimpleSchema({
+    // url: {
+    //     type: String,
+    //     min: 2,
+    //     max: 20,
+    //     index: true,
+    //     unique: true
+    // },
     title: {
         type: String,
         max: 200,
@@ -25,6 +32,11 @@ const PartiesSchema = new SimpleSchema({
     endDate: {
         type: Date,
     },
+    password: {
+        type: String,
+        min: 3,
+        max: 20,
+    },
     user_id: {
         type: String,
     },
@@ -32,7 +44,13 @@ const PartiesSchema = new SimpleSchema({
         type: Array,
     },
     'joined_users.$': {
+        type: Object,
+    },
+    'joined_users.$.user_id': {
         type: String,
+    },
+    'joined_users.$.date': {
+        type: Date,
     },
     created_at: {
         type: Date,

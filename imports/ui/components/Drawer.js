@@ -3,6 +3,9 @@ import PropTypes from 'proptypes';
 import { withStyles,Button, SwipeableDrawer, ListItemIcon, List, Icon, ListItemText, Divider, ListItem, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import Parties from '../../db/parties/collection';
+import DeletePartyButton from './DeletePartyButton';
 
 const styles = theme => ({
     drawerWidth: {
@@ -34,6 +37,7 @@ const styles = theme => ({
     },
     createParty: {
         marginLeft: 'auto',
+        marginRight: 10
     },
     appBar: {
         marginBottom: 20,
@@ -62,6 +66,26 @@ const TopList = () => (
                 <ListItemText primary="Spam" />
             </ListItem>
         </List>
+        <List component="nav">
+            <ListItem button component={Link} to="/">
+                <ListItemIcon>
+                    <Icon>settings</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+            </ListItem>
+            <ListItem button component={Link} to="/">
+                <ListItemIcon>
+                    <Icon>info</Icon>
+                </ListItemIcon>
+                <ListItemText primary="About" />
+            </ListItem>
+            <ListItem button component={Link} to="/">
+                <ListItemIcon>
+                    <Icon>exit_to_app</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+            </ListItem>
+        </List>
     </Fragment>
 );
 
@@ -72,10 +96,20 @@ class Drawer extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         user: PropTypes.object,
+        party: PropTypes.object,
     };
     toggleDrawer = opened => () => this.setState({ opened });
+    isOnPartyPage = () => this.props.match.path.indexOf('/party/:id/') !== -1;
     render = () => {
-        const { classes, user } = this.props;
+        const { classes, user, party } = this.props;
+        if(this.isOnPartyPage() && !party) return null;
+        const additionalButtons = (
+            <Fragment>
+                {this.isOnPartyPage() && (
+                    <DeletePartyButton party={party}/>
+                )}
+            </Fragment>
+        );
         return (
             <Fragment>
                 <AppBar position="static" className={classes.appBar}>
@@ -86,7 +120,8 @@ class Drawer extends Component {
                         <Typography variant="title" color="inherit">
                             Mance
                         </Typography>
-                        <Button component={Link} to="/create-party" variant="raised" color="primary" className={classes.createParty}>Create Party <Icon className={classes.rightIcon}>add</Icon></Button>
+                        <Button component={Link} to="/create-party" size="small" variant="raised" color="primary" className={classes.createParty}>Create Party <Icon className={classes.rightIcon}>add</Icon></Button>
+                        {additionalButtons}
                     </Toolbar>
                 </AppBar>
                 <SwipeableDrawer
@@ -114,6 +149,10 @@ class Drawer extends Component {
     }
 }
 
-export default withStyles(styles)(withTracker(() => ({
-    user: Meteor.user()
-}))(Drawer));
+export default withTracker(props => {
+    Meteor.subscribe('parties');
+    return {
+        party: Parties.findOne({_id: props.match.params.id}),
+        user: Meteor.user()
+    };
+})(withRouter(withStyles(styles)(Drawer)));

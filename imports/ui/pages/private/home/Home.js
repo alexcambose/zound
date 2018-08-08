@@ -11,8 +11,8 @@ class Home extends Component {
     };
     render = () => {
         const { parties } = this.props;
-        const partiesCards = parties.map(({_id, ...props}) =>
-            <PartyCard key={_id} id={_id} {...props}/>
+        const partiesCards = parties.map(e =>
+            <PartyCard key={e._id} party={e}/>
         );
         return (
             <div>
