@@ -36,7 +36,7 @@ class Party extends Component {
     };
     render = () => {
         const { party, classes } = this.props;
-        if(party === null) return <Redirect to="/"/>;
+        // if(party === null) return <Redirect to="/"/>;
         return (
             <div className={classes.container}>
                 {this.renderPage()}

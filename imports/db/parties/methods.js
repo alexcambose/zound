@@ -2,7 +2,7 @@ import Parties from './collection';
 
 Meteor.methods({
     'parties.insert': ({ title, description, genre, startDate, endDate, password }) => {
-        const data = { title, description, genre, startDate, endDate,password, joined_users: [{user_id: Meteor.userId(), date: new Date}], user_id: Meteor.userId(), created_at: new Date, upvotes: [], downvotes: [] };
+        const data = { title, description, genre, startDate, endDate, current_song_id: '', password, joined_users: [{user_id: Meteor.userId(), date: new Date}], user_id: Meteor.userId(), created_at: new Date, upvotes: [], downvotes: [] };
         try {
             const validation = Parties.simpleSchema().validate(data);
         }catch(e) {

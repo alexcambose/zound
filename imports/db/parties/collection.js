@@ -43,6 +43,9 @@ const PartiesSchema = new SimpleSchema({
     joined_users: {
         type: Array,
     },
+    current_song_id: {
+        type: String,
+    },
     'joined_users.$': {
         type: Object,
     },
