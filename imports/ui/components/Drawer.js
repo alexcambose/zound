@@ -79,7 +79,7 @@ const TopList = () => (
                 </ListItemIcon>
                 <ListItemText primary="About" />
             </ListItem>
-            <ListItem button component={Link} to="/">
+            <ListItem button onClick={Meteor.logout()}>
                 <ListItemIcon>
                     <Icon>exit_to_app</Icon>
                 </ListItemIcon>

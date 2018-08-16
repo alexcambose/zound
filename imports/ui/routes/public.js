@@ -7,13 +7,16 @@ export default [
         path: '/',
         component: Welcome,
         exact: true,
+        inContainer: true,
     },
     {
         path: '/login',
         component: Login,
+        inContainer: true,
     },
     {
         path: '/register',
         component: Register,
+        inContainer: true,
     },
 ];

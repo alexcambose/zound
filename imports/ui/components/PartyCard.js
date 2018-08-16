@@ -3,11 +3,11 @@ import PropTypes from 'proptypes';
 import { withStyles, Card,Icon, CardActions, CardContent, Button, Typography, CardHeader,IconButton, Avatar } from '@material-ui/core/';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import VoteButtons from './VoteButtons';
+import { withTracker } from 'meteor/react-meteor-data';
 
 const styles = theme => ({
     card: {
-        maxWidth: 800,
-        margin: 10,
     },
     cardContainer: {
         display: 'flex',
@@ -24,26 +24,6 @@ const styles = theme => ({
         textAlign: 'center',
         paddingTop: 10,
     },
-    votes: {
-        color: '#999',
-        marginRight: 4,
-        marginLeft: 0
-    },
-    cardActions: {
-        display: 'flex',
-    },
-    cardAction: {
-        display: 'flex',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    voteClear: {
-        color: theme.palette.primary.light,
-    },
-    voteFull: {
-        color: theme.palette.primary.dark,
-    }
 });
 
 class PartyCard extends Component {
@@ -52,22 +32,20 @@ class PartyCard extends Component {
     };
     static propTypes = {
         party: PropTypes.object.isRequired,
+        user: PropTypes.object,
     };
-    componentDidMount = () => {
-        Meteor.call('user.get', this.props.party.user_id, (err, user) => {
-            console.log(user);
-            this.setState({ user })
-        });
-    };
+
     vote = (isDownvote = false) => () => {
         Meteor.call('parties.toggleVote', isDownvote, this.props.party._id, (err, res) => {
-            console.log(err, res);
+            if(err) {
+                alert('error voting!');
+                console.log(err);
+            }
         })
     };
     render = () => {
         const { _id, title, description, joined_users, startDate, endDate, created_at, upvotes, downvotes } = this.props.party;
-        const { classes } = this.props;
-        const { user } = this.state;
+        const { classes, user } = this.props;
         const userIsJoined = this.props.party.joined_users.find(e => e.user_id === Meteor.userId());
         if(!user) return null;
         return (
@@ -101,19 +79,8 @@ class PartyCard extends Component {
                             {joined_users.length} people joined
                         </Typography>
                     </CardContent>
-                    <CardActions className={classes.cardActions}>
-                        <div className={classes.cardAction}>
-                            <IconButton className={upvotes.find(e => e === Meteor.userId()) ? classes.voteFull : classes.votes} onClick={this.vote()}>
-                                <Icon>thumb_up</Icon>
-                            </IconButton>
-                            <span>{upvotes.length}</span>
-                        </div>
-                        <div className={classes.cardAction}>
-                            <IconButton className={downvotes.find(e => e === Meteor.userId()) ? classes.voteFull : classes.votes} onClick={this.vote(true)}>
-                                <Icon>thumb_down</Icon>
-                            </IconButton>
-                            <span>{downvotes.length}</span>
-                        </div>
+                    <CardActions>
+                        <VoteButtons upvotes={upvotes} downvotes={downvotes} onUpvote={this.vote()} onDownvote={this.vote(true)}/>
                     </CardActions>
                 </Card>
             </div>
@@ -121,4 +88,8 @@ class PartyCard extends Component {
     }
 }
 
-export default withStyles(styles)(PartyCard);
+export default withTracker(({ party }) => {
+    return {
+        user: Meteor.users.findOne({_id: party.user_id}),
+    }
+})(withStyles(styles)(PartyCard));

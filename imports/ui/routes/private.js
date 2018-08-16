@@ -13,18 +13,15 @@ export default [
         path: '/create-party',
         component: CreateParty,
         exact: true,
-        inContainer: true,
     },
     {
         path: '/join-party/:id',
         component: JoinParty,
         exact: true,
-        // inContainer: true,
     },
     {
         path: '/party/:id/:page?',
         component: Party,
-        // inContainer: true,
     },
 
 ];

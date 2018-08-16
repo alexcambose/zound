@@ -5,3 +5,6 @@ import '/imports/db/users/account-creation';
 import '/imports/db/parties/collection';
 import '/imports/db/parties/methods';
 import '/imports/db/parties/publications';
+import '/imports/db/songs/collection';
+import '/imports/db/songs/methods';
+import '/imports/db/songs/publications';

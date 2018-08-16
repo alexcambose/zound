@@ -17,6 +17,10 @@ export class Track {
         try {
             let res = await fetch(url);
             res = await res.json();
+            if(res.track.wiki) {
+                const summary = res.track.wiki.summary;
+                res.track.wiki.summary = res.track.wiki.summary.substring(0, summary.indexOf('<a')) + '.';
+            }
             return res.track;
         } catch (e) {
             throw new Meteor.Error('api-error', e);

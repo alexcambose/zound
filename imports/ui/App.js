@@ -5,8 +5,7 @@ import createHashHistory from 'history/createBrowserHistory';
 import { withTracker } from 'meteor/react-meteor-data';
 import privateRoutes from '/imports/ui/routes/private';
 import publicRoutes from '/imports/ui/routes/public';
-import privateContainer from '/imports/ui/pages/private/Container';
-import publicContainer from '/imports/ui/pages/public/Container';
+import Container from '/imports/ui/pages/Container';
 import { Redirect } from 'react-router-dom';
 import Drawer from './components/Drawer';
 
@@ -18,15 +17,11 @@ class App extends Component {
     };
     createRoutes = () => {
         const { user } = this.props;
-        const Container = user ? privateContainer : publicContainer;
         return (
                 <Switch>
-                    {(user ? privateRoutes : publicRoutes).map(({ inContainer, component, ...props}, i) => {
+                    {(user ? privateRoutes : publicRoutes).map(({ component, ...props}, i) => {
                         const Component = component;
-                        if(inContainer){
                             return <Route key={i} {...props} render={props => <Fragment>{user && <Drawer {...props}/>}<Container><Component {...props}/></Container></Fragment>}/>;
-                        }
-                        return <Route key={i} {...props} render={props => <Fragment>{user && <Drawer {...props}/>}<Component {...props}/></Fragment>} />;
 
                     })}
                     <Route path="/*" render={() => <Redirect to="/"/>}/>

@@ -11,12 +11,18 @@ const SongsSchema = new SimpleSchema({
         type: String,
     },
     data: {
-        type: Object,
+        type: String, //JSON string
     },
     upvotes: {
         type: Array,
     },
     'upvotes.$': {
+        type: String,
+    },
+    downvotes: {
+        type: Array,
+    },
+    'downvotes.$': {
         type: String,
     },
     created_at: {

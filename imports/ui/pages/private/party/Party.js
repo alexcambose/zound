@@ -9,7 +9,7 @@ import PartyBottomNavigation from '../../../components/PartyBottomNavigation';
 import Music from './Music';
 import People from './People';
 import Info from './Info';
-import AddSuggestionButton from '../../../components/AddSuggestionButton';
+import AddSuggestionButton from '../../../components/SongSelectButton';
 const styles = theme => ({
     container: {
         marginBottom: 57,
@@ -37,6 +37,7 @@ class Party extends Component {
     render = () => {
         const { party, classes } = this.props;
         // if(party === null) return <Redirect to="/"/>;
+        if(party === null) return null;
         return (
             <div className={classes.container}>
                 {this.renderPage()}

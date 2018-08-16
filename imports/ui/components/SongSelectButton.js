@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { Button, Dialog, AppBar, Typography, CircularProgress,Avatar, IconButton,TextField, Icon, Chip, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelActions, ExpansionPanelDetails, Toolbar, withStyles } from '../../../node_modules/@material-ui/core/';
+import { Button, Dialog, AppBar, ExpansionPanelActions, Typography, CircularProgress, Avatar, IconButton, TextField, Icon, Chip, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Toolbar, withStyles } from '@material-ui/core';
 import { Track } from '../utils';
 import _ from 'lodash';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
+
 momentDurationFormatSetup(moment);
 
 const styles = theme => ({
@@ -52,9 +53,7 @@ const styles = theme => ({
         height: 24,
         margin: 4,
     },
-    imagesContainer: {
-
-    },
+    imagesContainer: {},
     albumName: {
         display: 'flex',
         justifyContent: 'center',
@@ -81,7 +80,19 @@ const styles = theme => ({
     }
 });
 
-class AddSuggestionButton extends Component {
+class SongSelectButton extends Component {
+    static propTypes = {
+        classes: PropTypes.object.isRequired,
+        selectButtonLabel: PropTypes.string,
+        onSelected: PropTypes.func,
+        title: PropTypes.string,
+        dialogTitle: PropTypes.string,
+    };
+    static defaultProps = {
+        selectButtonLabel: 'Select',
+        title: 'Select a song',
+        dialogTitle: 'Search a track',
+    };
     state = {
         open: false,
         search: '',
@@ -89,12 +100,9 @@ class AddSuggestionButton extends Component {
         tracksFound: [],
         hasError: false,
     };
-    static propTypes = {
-        classes: PropTypes.object.isRequired,
-    };
     handleDialog = open => () => this.setState({ open });
-    handleSearchChange =({ target }) => {
-        this.setState({search: target.value});
+    handleSearchChange = ({ target }) => {
+        this.setState({ search: target.value });
         this.handleSearch();
     };
     handleSearch = _.debounce(async e => {
@@ -112,74 +120,64 @@ class AddSuggestionButton extends Component {
         const newTracks = [...this.state.tracksFound];
         newTracks[index].info = info;
         this.setState({ tracksFound: newTracks });
-        console.log(newTracks);
     };
-    componentDidCatch(error, info) {
-        this.setState({ hasError: true });
-    }
     render = () => {
         const { open, search, expanded, tracksFound, hasError } = this.state;
-        const { classes } = this.props;
-        if(hasError) return <div>Error!</div>;
+        const { classes, onSelected, selectButtonLabel, title, dialogTitle } = this.props;
+
+        if (hasError) return <div>Error!</div>;
         const trackPanels = tracksFound.map((e, i) => (
             <ExpansionPanel key={i} expanded={expanded === i} onChange={this.handlePanelChange(i)}>
                 <ExpansionPanelSummary expandIcon={<Icon>expand_more</Icon>} className={classes.panelSummary}>
                     <Typography className={classes.heading}>{e.name}</Typography>
                     <Typography className={classes.secondaryHeading}>{e.artist}</Typography>
                 </ExpansionPanelSummary>
-                {e.info ?
-                    <ExpansionPanelDetails className={classes.trackMoreInfo}>
-                        <div className={classes.trackInfo}>
-                            <div className={classes.imagesContainer}>
-                                <Avatar alt={e.name} src={e.image[2]['#text']} className={classes.image} />
-                            </div>
-                            <div className={classes.info}>
-                                <Typography gutterBottom variant="headline">
-                                    {e.name}
-                                </Typography>
-                                <Typography gutterBottom variant="subheading" className={classes.albumInfo}>
-                                    <small>by</small>
-                                    <span className={classes.artistName}>{e.artist}</span>
-                                </Typography>
-                                {e.info.album &&
-                                <Typography gutterBottom variant="subheading" className={classes.albumInfo}>
-                                    <small>album</small>
-                                    <div className={classes.albumName}>
-                                        <Avatar alt={e.name} src={e.info.album.image[0]['#text']}
-                                        className={classes.albumImage}/>
-                                        <span>{e.info.album.title}</span>
-                                        </div>
-                                </Typography>
-                                }
-                                {parseInt(e.info.duration) !== 0 &&
-                                <Typography gutterBottom>
-                                    Duration: <strong>{moment.duration(parseInt(e.info.duration), "milliseconds").format()}</strong>
-                                </Typography>
-                                }
-                                <div>
-                                    {e.info.toptags.tag.map((e, i) => <Chip key={i} label={e.name} className={classes.chip}/>)}
+                {e.info &&
+                <ExpansionPanelDetails className={classes.trackMoreInfo}>
+                    <div className={classes.trackInfo}>
+                        <div className={classes.imagesContainer}>
+                            <Avatar alt={e.name} src={e.image[2]['#text']} className={classes.image}/>
+                        </div>
+                        <div className={classes.info}>
+                            <Typography gutterBottom variant="headline">
+                                {e.name}
+                            </Typography>
+                            <Typography gutterBottom variant="subheading" className={classes.albumInfo}>
+                                <small>by</small>
+                                <span className={classes.artistName}>{e.artist}</span>
+                            </Typography>
+                            {e.info.album &&
+                            <Typography gutterBottom variant="subheading" className={classes.albumInfo}>
+                                <small>album</small>
+                                <div className={classes.albumName}>
+                                    <Avatar alt={e.name} src={e.info.album.image[0]['#text']}
+                                            className={classes.albumImage}/>
+                                    <span>{e.info.album.title}</span>
                                 </div>
+                            </Typography>
+                            }
+                            {parseInt(e.info.duration) !== 0 &&
+                            <Typography gutterBottom>
+                                Duration: <strong>{moment.duration(parseInt(e.info.duration), 'milliseconds').format()}</strong>
+                            </Typography>
+                            }
+                            <div>
+                                {e.info.toptags.tag.map((e, i) => <Chip key={i} label={e.name}
+                                                                        className={classes.chip}/>)}
                             </div>
                         </div>
-
-                        {e.info.wiki &&
-                            <Typography variant='caption'>
-                                {renderHTML(e.info.wiki.summary)}
-                            </Typography>
-                        }
-
-                    </ExpansionPanelDetails>
-                    :
-                    <div className={classes.textCenter}>
-                        <CircularProgress className={classes.progress}/>
-
                     </div>
+
+                    {e.info.wiki && <Typography variant='caption'>{renderHTML(e.info.wiki.summary)}</Typography>}
+                </ExpansionPanelDetails>
                 }
+                {e.info && <ExpansionPanelActions><Button size="small" variant='outlined' fullWidth onClick={() => {onSelected(e); this.handleDialog(false)}}>{selectButtonLabel}</Button></ExpansionPanelActions>}
+                {!e.info && <div className={classes.textCenter}><CircularProgress className={classes.progress}/></div>}
             </ExpansionPanel>
         ));
         return (
             <Fragment>
-                <Button onClick={this.handleDialog(true)} variant="raised" color="primary" fullWidth>Add suggestion</Button>
+                <Button onClick={this.handleDialog(true)} variant="raised" color="primary" fullWidth>{title}</Button>
                 <Dialog
                     fullScreen
                     open={open}
@@ -190,8 +188,8 @@ class AddSuggestionButton extends Component {
                             <IconButton color="inherit" onClick={this.handleDialog(false)} aria-label="Close">
                                 <Icon>close</Icon>
                             </IconButton>
-                            <Typography variant="title" color="inherit" >
-                                Search a track
+                            <Typography variant="title" color="inherit">
+                                {dialogTitle}
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -211,7 +209,10 @@ class AddSuggestionButton extends Component {
                 </Dialog>
             </Fragment>
         );
+    };
+    componentDidCatch(error, info) {
+        this.setState({ hasError: true });
     }
 }
 
-export default withStyles(styles)(AddSuggestionButton);
+export default withStyles(styles)(SongSelectButton);
