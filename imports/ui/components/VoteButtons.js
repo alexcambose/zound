@@ -31,6 +31,7 @@ class VoteButtons extends Component {
         onUpvote: PropTypes.func.isRequired,
         onDownvote: PropTypes.func.isRequired,
         upvotes: PropTypes.array.isRequired,
+        classes: PropTypes.object.isRequired,
         downvotes: PropTypes.array.isRequired
     };
     static defaultProps = {

@@ -35,58 +35,57 @@ const styles = theme => ({
         width: 50,
         marginBottom: 10,
     },
-    createParty: {
+    additionalButtonsContainer: {
         marginLeft: 'auto',
         marginRight: 10
     },
     appBar: {
-        marginBottom: 20,
+        position: 'fixed',
     },
     rightIcon: {
         marginLeft: theme.spacing.unit,
-    }
+    },
 });
 
 const TopList = () => (
-    <Fragment>
-        <List component="nav">
-            <ListItem button>
-                <ListItemIcon>
-                    <Icon>email</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Inbox" />
-            </ListItem>
-        </List>
-        <Divider />
-        <List component="nav">
-            <ListItem button>
-                <ListItemText primary="Trash" />
-            </ListItem>
-            <ListItem button component="a" href="#simple-list">
-                <ListItemText primary="Spam" />
-            </ListItem>
-        </List>
-        <List component="nav">
-            <ListItem button component={Link} to="/">
-                <ListItemIcon>
-                    <Icon>settings</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-            </ListItem>
-            <ListItem button component={Link} to="/">
-                <ListItemIcon>
-                    <Icon>info</Icon>
-                </ListItemIcon>
-                <ListItemText primary="About" />
-            </ListItem>
-            <ListItem button onClick={Meteor.logout()}>
-                <ListItemIcon>
-                    <Icon>exit_to_app</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-            </ListItem>
-        </List>
-    </Fragment>
+    <List component="nav">
+        <ListItem button divider>
+            <ListItemIcon>
+                <Icon>person</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+        </ListItem>
+        <ListItem button>
+            <ListItemIcon>
+                <Icon>pages</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Joined parties" />
+        </ListItem>
+        <ListItem button divider component={Link} to="/create-party">
+            <ListItemIcon>
+                <Icon>add</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Create a party" />
+        </ListItem>
+        <ListItem button component={Link} to="/">
+            <ListItemIcon>
+                <Icon>settings</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+        </ListItem>
+        <ListItem button component={Link} to="/">
+            <ListItemIcon>
+                <Icon>info</Icon>
+            </ListItemIcon>
+            <ListItemText primary="About" />
+        </ListItem>
+        <ListItem button>
+            <ListItemIcon>
+                <Icon>exit_to_app</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Logout"/>
+        </ListItem>
+    </List>
 );
 
 class Drawer extends Component {
@@ -104,11 +103,11 @@ class Drawer extends Component {
         const { classes, user, party } = this.props;
         if(this.isOnPartyPage() && !party) return null;
         const additionalButtons = (
-            <Fragment>
+            <div className={classes.additionalButtonsContainer}>
                 {this.isOnPartyPage() && (
                     <DeletePartyButton party={party}/>
                 )}
-            </Fragment>
+            </div>
         );
         return (
             <Fragment>
@@ -120,7 +119,6 @@ class Drawer extends Component {
                         <Typography variant="title" color="inherit">
                             Mance
                         </Typography>
-                        <Button component={Link} to="/create-party" size="small" variant="raised" color="primary" className={classes.createParty}>Create Party <Icon className={classes.rightIcon}>add</Icon></Button>
                         {additionalButtons}
                     </Toolbar>
                 </AppBar>
@@ -141,7 +139,7 @@ class Drawer extends Component {
                             <div className={classes.drawerHeaderName}>{user.profile.firstName} {user.profile.lastName}</div>
                             <div>{user.emails[0].address || ''}</div>
                         </div>
-                        <TopList/>
+                        <TopList classes={classes}/>
                     </div>
                 </SwipeableDrawer>
             </Fragment>

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
+import Container from '../pages/Container';
 
 momentDurationFormatSetup(moment);
 
@@ -121,9 +122,15 @@ class SongSelectButton extends Component {
         newTracks[index].info = info;
         this.setState({ tracksFound: newTracks });
     };
+    handleSongSelect = song => {
+        const { onSelected } = this.props;
+        if(onSelected)
+            onSelected(song);
+        this.handleDialog(false)();
+    };
     render = () => {
         const { open, search, expanded, tracksFound, hasError } = this.state;
-        const { classes, onSelected, selectButtonLabel, title, dialogTitle } = this.props;
+        const { classes, selectButtonLabel, title, dialogTitle } = this.props;
 
         if (hasError) return <div>Error!</div>;
         const trackPanels = tracksFound.map((e, i) => (
@@ -171,7 +178,7 @@ class SongSelectButton extends Component {
                     {e.info.wiki && <Typography variant='caption'>{renderHTML(e.info.wiki.summary)}</Typography>}
                 </ExpansionPanelDetails>
                 }
-                {e.info && <ExpansionPanelActions><Button size="small" variant='outlined' fullWidth onClick={() => {onSelected(e); this.handleDialog(false)}}>{selectButtonLabel}</Button></ExpansionPanelActions>}
+                {e.info && <ExpansionPanelActions><Button size="small" variant='outlined' fullWidth onClick={() => this.handleSongSelect(e)}>{selectButtonLabel}</Button></ExpansionPanelActions>}
                 {!e.info && <div className={classes.textCenter}><CircularProgress className={classes.progress}/></div>}
             </ExpansionPanel>
         ));
@@ -193,19 +200,22 @@ class SongSelectButton extends Component {
                             </Typography>
                         </Toolbar>
                     </AppBar>
-                    <TextField
-                        id="search"
-                        label="Type track name..."
-                        type="search"
-                        fullWidth
-                        margin="normal"
-                        value={search}
-                        onChange={this.handleSearchChange}
-                        className={classes.searchInput}
-                    />
-                    <div>
-                        {trackPanels}
-                    </div>
+                    <Container noTopPadding scroll>
+                        <TextField
+                            id="search"
+                            label="Type track name..."
+                            type="search"
+                            fullWidth
+                            margin="normal"
+                            value={search}
+                            onChange={this.handleSearchChange}
+                            className={classes.searchInput}
+                        />
+                        <div>
+                            {trackPanels}
+                        </div>
+                    </Container>
+
                 </Dialog>
             </Fragment>
         );

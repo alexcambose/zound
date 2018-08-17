@@ -12,10 +12,15 @@ Meteor.methods({
             downvotes: [],
         })
     },
-    'songs.setCurrent': (party_id, current_song_id) => {
-        Parties.update({_id: party_id}, {$set: {current_song_id}});
+    'songs.setCurrent': (party_id, new_song_id) => {
+        const currentSongId = Parties.findOne({_id: party_id}).current_song_id;
+        if(currentSongId) Songs.remove({_id: currentSongId});
+
+        Parties.update({_id: party_id}, {$set: {current_song_id: new_song_id}});
+        console.log(`Playing song ${new_song_id} at party ${party_id}, removed song ${currentSongId}`)
     },
     'songs.remove': _id => {
+        if(Parties.findOne({current_song_id: _id})) throw new Meteor.Error('remove', 'Cannot remove a song that is playing');
         Songs.remove({_id});
         console.log(`Song ${_id} removed`);
     },

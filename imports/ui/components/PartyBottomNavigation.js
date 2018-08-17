@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'proptypes';
 import { BottomNavigation, BottomNavigationAction, Icon, withStyles } from '@material-ui/core';
 import { withRouter } from 'react-router';
 const styles = theme => ({
@@ -8,6 +7,7 @@ const styles = theme => ({
         bottom: 0,
         left: 0,
         right: 0,
+        boxShadow: '0px 0px 34px -12px black',
     }
 });
 class PartyBottomNavigation extends Component {

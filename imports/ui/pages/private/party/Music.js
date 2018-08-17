@@ -4,6 +4,8 @@ import SongSelectButton from '../../../components/SongSelectButton';
 import { withTracker } from 'meteor/react-meteor-data';
 import Songs from '../../../../db/songs/collection';
 import SongCard from '../../../components/SongCard';
+import CurrentSongPanel from '../../../components/CurrentSongPanel';
+
 
 class Music extends Component {
     state = {};
@@ -23,7 +25,8 @@ class Music extends Component {
         const { songs, party } = this.props;
         return (
             <Fragment>
-                <SongSelectButton onSelected={this.handleSelected}/>
+                <CurrentSongPanel party={party}/>
+                <SongSelectButton onSelected={this.handleSelected} title="Add suggestion"/>
                 {songs.map(e => <SongCard song={e} party={party} key={e._id}/>)}
             </Fragment>
         );
