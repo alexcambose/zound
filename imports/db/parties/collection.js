@@ -26,6 +26,9 @@ const PartiesSchema = new SimpleSchema({
     'genre.$': {
         type: Number,
     },
+    color: {
+        type: String,
+    },
     startDate: {
         type: Date,
     },

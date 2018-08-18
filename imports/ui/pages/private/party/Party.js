@@ -9,14 +9,15 @@ import PartyBottomNavigation from '../../../components/PartyBottomNavigation';
 import Music from './Music';
 import People from './People';
 import Info from './Info';
-import AddSuggestionButton from '../../../components/SongSelectButton';
-const styles = theme => ({
+import Settings from './Settings';
+
+const styles = () => ({
     container: {
         marginBottom: 57,
     }
 });
+
 class Party extends Component {
-    state = {};
     static propTypes = {
         party: PropTypes.object,
     };
@@ -29,19 +30,22 @@ class Party extends Component {
         if(page === 'music') {
             return <Music party={party}/>;
         } else if(page === 'people') {
-            return <People joined_users={party.joined_users}/>;
+            return <People joined_users={party.joined_users} party={party}/>;
         } else if(page === 'info') {
             return <Info party={party}/>;
+        } else if(page === 'settings') {
+            return <Settings party={party}/>;
         }
     };
+
     render = () => {
         const { party, classes } = this.props;
-        // if(party === null) return <Redirect to="/"/>;
+        // if(party === null) return <Redirect to="/"/>; todo
         if(party === null) return null;
         return (
             <div className={classes.container}>
                 {this.renderPage()}
-                <PartyBottomNavigation/>
+                <PartyBottomNavigation party={party}/>
             </div>
         );
     }

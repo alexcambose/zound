@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { withStyles,Button, SwipeableDrawer, ListItemIcon, List, Icon, ListItemText, Divider, ListItem, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { withStyles, SwipeableDrawer, ListItemIcon, List, Icon, ListItemText, Divider, ListItem, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -49,13 +49,19 @@ const styles = theme => ({
 
 const TopList = () => (
     <List component="nav">
-        <ListItem button divider>
+        <ListItem button component={Link} to="/">
+            <ListItemIcon>
+                <Icon>home</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button divider component={Link} to={"/profile/" + Meteor.userId()}>
             <ListItemIcon>
                 <Icon>person</Icon>
             </ListItemIcon>
             <ListItemText primary="Profile" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/joined-parties">
             <ListItemIcon>
                 <Icon>pages</Icon>
             </ListItemIcon>
@@ -67,13 +73,13 @@ const TopList = () => (
             </ListItemIcon>
             <ListItemText primary="Create a party" />
         </ListItem>
-        <ListItem button component={Link} to="/">
+        <ListItem button component={Link} to="/settings">
             <ListItemIcon>
                 <Icon>settings</Icon>
             </ListItemIcon>
             <ListItemText primary="Settings" />
         </ListItem>
-        <ListItem button component={Link} to="/">
+        <ListItem button component={Link} to="/about">
             <ListItemIcon>
                 <Icon>info</Icon>
             </ListItemIcon>
@@ -94,19 +100,13 @@ class Drawer extends Component {
     };
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        user: PropTypes.object,
-        party: PropTypes.object,
     };
     toggleDrawer = opened => () => this.setState({ opened });
-    isOnPartyPage = () => this.props.match.path.indexOf('/party/:id/') !== -1;
     render = () => {
-        const { classes, user, party } = this.props;
-        if(this.isOnPartyPage() && !party) return null;
+        const { classes } = this.props;
         const additionalButtons = (
             <div className={classes.additionalButtonsContainer}>
-                {this.isOnPartyPage() && (
-                    <DeletePartyButton party={party}/>
-                )}
+                {/*can be added later*/}
             </div>
         );
         return (
@@ -135,9 +135,9 @@ class Drawer extends Component {
                         onKeyDown={this.toggleDrawer(false)}
                     >
                         <div className={classes.drawerHeader}>
-                            <img className={classes.drawerHeaderImage} src={'/' + user.profile.image}/>
-                            <div className={classes.drawerHeaderName}>{user.profile.firstName} {user.profile.lastName}</div>
-                            <div>{user.emails[0].address || ''}</div>
+                            <img className={classes.drawerHeaderImage} src={'/' + Meteor.user().profile.image}/>
+                            <div className={classes.drawerHeaderName}>{Meteor.user().profile.firstName} {Meteor.user().profile.lastName}</div>
+                            <div>{Meteor.user().emails[0].address || ''}</div>
                         </div>
                         <TopList classes={classes}/>
                     </div>
@@ -147,10 +147,4 @@ class Drawer extends Component {
     }
 }
 
-export default withTracker(props => {
-    Meteor.subscribe('parties');
-    return {
-        party: Parties.findOne({_id: props.match.params.id}),
-        user: Meteor.user()
-    };
-})(withRouter(withStyles(styles)(Drawer)));
+export default withStyles(styles)(Drawer);

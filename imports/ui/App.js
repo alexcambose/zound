@@ -18,14 +18,14 @@ class App extends Component {
     createRoutes = () => {
         const { user } = this.props;
         return (
-                <Switch>
-                    {(user ? privateRoutes : publicRoutes).map(({ component, ...props}, i) => {
-                        const Component = component;
-                            return <Route key={i} {...props} render={props => <Fragment>{user && <Drawer {...props}/>}<Container><Component {...props}/></Container></Fragment>}/>;
+            <Switch>
+                {(user ? privateRoutes : publicRoutes).map(({ component, ...props}, i) => {
+                    const Component = component;
+                        return <Route key={i} {...props} render={props => <Fragment><Container><Component {...props}/></Container></Fragment>}/>;
 
-                    })}
-                    <Route path="/*" render={() => <Redirect to="/"/>}/>
-                </Switch>
+                })}
+                <Route path="/*" render={() => <Redirect to="/"/>}/>
+            </Switch>
         );
     };
     render = () => {
@@ -34,7 +34,7 @@ class App extends Component {
         return (
             <Router history={history}>
                 <Fragment>
-
+                        {user && <Drawer/>}
                         {this.createRoutes()}
                 </Fragment>
             </Router>

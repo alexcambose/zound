@@ -90,6 +90,15 @@ class SongCard extends Component {
             }
         });
     };
+    removeFromPlaying = () => {
+        this.handleClose();
+        Meteor.call('songs.removeFromPlaying', this.props.song._id, (err, res) => {
+            if(err) {
+                alert('error deleting song!');
+                console.log(err);
+            }
+        });
+    };
     render = () => {
         const { classes, song, party, isCurrentlyPlaying } = this.props;
         const { anchorEl } = this.state;
@@ -131,8 +140,10 @@ class SongCard extends Component {
                         onClose={this.handleClose}
                         className={classes.menu}
                     >
-                        {Meteor.userId() === party.user_id && <MenuItem onClick={this.setAsCurrentSong}><ListItemIcon><Icon>add</Icon></ListItemIcon>Set as current song</MenuItem>}
-                        {Meteor.userId() === song.user_id && <MenuItem onClick={this.delete}><ListItemIcon><Icon>delete</Icon></ListItemIcon> Delete</MenuItem>}
+                        {Meteor.userId() === party.user_id && !isCurrentlyPlaying && <MenuItem onClick={this.setAsCurrentSong}><ListItemIcon><Icon>add</Icon></ListItemIcon>Set as current song</MenuItem>}
+                        {Meteor.userId() === party.user_id && isCurrentlyPlaying && <MenuItem onClick={this.removeFromPlaying}><ListItemIcon><Icon>voice_over_off</Icon></ListItemIcon>Remove from playing</MenuItem>}
+                        {Meteor.userId() === song.user_id && !isCurrentlyPlaying && <MenuItem onClick={this.delete}><ListItemIcon><Icon>delete</Icon></ListItemIcon> Delete</MenuItem>}
+
                     </Menu>
                 </div>
 

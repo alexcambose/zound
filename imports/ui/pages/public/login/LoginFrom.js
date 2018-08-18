@@ -32,7 +32,7 @@ class LoginFrom extends Component {
                 <TextField
                     id="email"
                     type="email"
-                    fullWidth={true}
+                    fullWidth
                     label="Email"
                     value={email}
                     onChange={this.handleChange('email')}

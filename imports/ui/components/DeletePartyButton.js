@@ -1,16 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
 import { Button, Icon, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Slide } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 
 class DeletePartyButton extends Component {
     state = {
-        open: false,
+        open: true,
     };
     static propTypes = {
         party: PropTypes.object.isRequired,
     };
-    static defaultProps = {};
     handleDeleteParty = () => {
         Meteor.call('parties.remove', this.props.party._id, (err, res) => {
             if(err) alert(err);
@@ -25,7 +23,7 @@ class DeletePartyButton extends Component {
         if(!party) return null;
         return (
             <Fragment>
-                <Button size="small" onClick={this.handleDialog(true)} variant='outlined' color="secondary" ><Icon>delete</Icon></Button>
+                <Button size="small" onClick={this.handleDialog(true)} variant='raised' color="secondary" fullWidth><Icon>delete</Icon> Delete party</Button>
                 <Dialog
                     open={this.state.open}
                     TransitionComponent={props => <Slide direction="up" {...props} />}

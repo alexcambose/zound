@@ -24,6 +24,17 @@ Meteor.methods({
         Songs.remove({_id});
         console.log(`Song ${_id} removed`);
     },
+    'songs.removeFromPlaying': _id => {
+        const party = Parties.findOne({current_song_id: _id});
+        if(party) {
+            Songs.remove({_id});
+            Parties.update({current_song_id: _id}, {$set: {current_song_id: 0}});
+            console.log(`Song ${_id} removed, playing no song at party ${party._id}`);
+        } else {
+            throw new Meteor.Error('remove', 'Cannot remove a song from playing that is not playing');
+        }
+
+    },
     'songs.toggleVote': (isDownvote = false, _id) => {
         const songs = Songs.findOne({_id});
         const key = isDownvote ? 'downvotes' : 'upvotes';

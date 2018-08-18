@@ -16,6 +16,7 @@
     "meteor-node-stubs": "^0.4.1",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
+    "pluralize": "^7.0.0",
     "proptypes": "^1.1.0",
     "react": "^16.4.2",
     "react-addons-pure-render-mixin": "^15.6.2",

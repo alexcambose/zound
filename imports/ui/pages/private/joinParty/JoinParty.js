@@ -19,7 +19,7 @@ class JoinParty extends Component {
     handleChange = name => e => this.setState({ [name]: e.target.value });
     handleSubmit = e => {
         e.preventDefault();
-        Meteor.call('parties.toggleJoin', this.state.password, this.props.party._id, (err, res) => {
+        Meteor.call('parties.toggleJoin', this.props.party._id, this.state.password, (err, res) => {
             if(err) this.setState({ error: err.reason});
             else this.props.history.push('/');
         });

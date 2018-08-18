@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import VoteButtons from './VoteButtons';
 import { withTracker } from 'meteor/react-meteor-data';
+import pluralize from 'pluralize';
 
 const styles = theme => ({
     card: {
@@ -33,6 +34,7 @@ class PartyCard extends Component {
     static propTypes = {
         party: PropTypes.object.isRequired,
         user: PropTypes.object,
+        noVote: PropTypes.bool,
     };
 
     vote = (isDownvote = false) => () => {
@@ -45,7 +47,7 @@ class PartyCard extends Component {
     };
     render = () => {
         const { _id, title, description, joined_users, startDate, endDate, created_at, upvotes, downvotes } = this.props.party;
-        const { classes, user } = this.props;
+        const { classes, user, noVote } = this.props;
         const userIsJoined = this.props.party.joined_users.find(e => e.user_id === Meteor.userId());
         if(!user) return null;
         return (
@@ -76,11 +78,11 @@ class PartyCard extends Component {
                             <strong>From:</strong> {moment(startDate).format('MMMM Do YYYY, h:mm a')} <strong>to</strong> {moment(endDate).format('MMMM Do YYYY, h:mm a')}
                         </Typography>
                         <Typography variant="body1" className={classes.detail}>
-                            {joined_users.length} people joined
+                            {joined_users.length} {pluralize('people', joined_users.length)} joined
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <VoteButtons upvotes={upvotes} downvotes={downvotes} onUpvote={this.vote()} onDownvote={this.vote(true)}/>
+                        {!noVote && <VoteButtons upvotes={upvotes} downvotes={downvotes} onUpvote={this.vote()} onDownvote={this.vote(true)}/> }
                     </CardActions>
                 </Card>
             </div>
