@@ -13,6 +13,7 @@ import Settings from './Settings';
 
 const styles = () => ({
     container: {
+        marginTop: 6,
         marginBottom: 57,
     }
 });

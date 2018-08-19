@@ -1,45 +1,45 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { Button, Icon, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Slide } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import { withRouter } from 'react-router';
 
-class DeletePartyButton extends Component {
-    state = {
-        open: true,
-    };
+class DeletePartyDialog extends Component {
     static propTypes = {
         party: PropTypes.object.isRequired,
+        onClose: PropTypes.func.isRequired,
+        open: PropTypes.bool.isRequired,
     };
     handleDeleteParty = () => {
         Meteor.call('parties.remove', this.props.party._id, (err, res) => {
             if(err) alert(err);
             else {
-                this.handleDialog(false);
+                this.props.history.replace('/');
             }
         });
     };
-    handleDialog = open => () => this.setState({ open });
+    closeDialog = () => {
+        this.props.onClose();
+    };
     render = () => {
-        const { party } = this.props;
+        const { party, open } = this.props;
         if(!party) return null;
         return (
             <Fragment>
-                <Button size="small" onClick={this.handleDialog(true)} variant='raised' color="secondary" fullWidth><Icon>delete</Icon> Delete party</Button>
                 <Dialog
-                    open={this.state.open}
-                    TransitionComponent={props => <Slide direction="up" {...props} />}
+                    open={open}
                     keepMounted
-                    onClose={this.handleDialog(false)}
+                    onClose={this.closeDialog}
                 >
-                    <DialogTitle id="alert-dialog-slide-title">
+                    <DialogTitle >
                         Warning
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
+                        <DialogContentText >
                             Are you sure you want to delete <strong>{party.title}</strong> ?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDialog(false)} color="primary">
+                        <Button onClick={this.closeDialog} color="primary">
                             No
                         </Button>
                         <Button onClick={this.handleDeleteParty} color="secondary">
@@ -52,4 +52,4 @@ class DeletePartyButton extends Component {
     }
 }
 
-export default DeletePartyButton;
+export default withRouter(DeletePartyDialog);

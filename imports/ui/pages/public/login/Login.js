@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import LoginFrom from './LoginFrom';
+import LoginFrom from '../../../forms/LoginFrom';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 

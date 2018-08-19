@@ -1,6 +1,27 @@
 {
-  "name": "songlup",
+  "name": "mance",
   "private": true,
+  "version": "1.0.0",
+  "description": "Animation library that mimics CSS keyframes when scrolling",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexcambose/mance.git"
+  },
+  "keywords": [
+    "music",
+    "party",
+    "choice",
+    "app",
+    "material-ui",
+    "mobile"
+  ],
+  "author": "Alexandru Cambose",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexcambose/mance/issues"
+  },
+  "homepage": "https://github.com/alexcambose/mance#readme",
+
   "scripts": {
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",

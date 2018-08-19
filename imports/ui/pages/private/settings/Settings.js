@@ -1,22 +1,32 @@
 import React, { Component, Fragment } from 'react';
-import { Icon, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, ListSubheader } from '@material-ui/core';
+import { Icon, List, ListItem, ListItemIcon, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, ListItemText, ListItemSecondaryAction, Switch, ListSubheader, Slide, Button } from '@material-ui/core';
 import AccountSettingsDialog from '../../../components/AccountSettingsDialog';
 
 class Settings extends Component {
     state = {
-        darkTheme: false,
+        darkTheme: !!Meteor.user().profile.settings.darkTheme,
         accountDialog: false,
-        publicEmail: Meteor.user().profile.publicEmail,
+        publicEmail: !!Meteor.user().profile.settings.publicEmail,
+        deleteAccountDialog: false,
     };
-    handleToggle = value => () => this.setState({[value]: !this.state[value]});
-    handleDeleteAccount = () => {
+    handleDialog = deleteAccountDialog => () => this.setState({ deleteAccountDialog });
+    handleToggle = value => () => this.setState({[value]: !this.state[value]}, () => {
+        Meteor.call('user.updateSettings', this.state, (err, res) => {
+            if(err) alert('error');
 
+        });
+    });
+
+    handleDeleteAccount = () => {
+        Meteor.call('user.removeAccount', (err, res) => {
+            if(err) alert('error');
+
+        });
     };
     render = () => {
-        const { darkTheme, accountDialog, publicEmail } = this.state;
+        const { darkTheme, accountDialog, publicEmail, deleteAccountDialog } = this.state;
         return (
             <Fragment>
-                {accountDialog && <AccountSettingsDialog onClose={this.handleToggle('accountDialog')}/>}
                 <List subheader={<ListSubheader>Appearance</ListSubheader>}>
                     <ListItem
                         button
@@ -61,7 +71,7 @@ class Settings extends Component {
                     </ListItem>
                     <ListItem
                         button
-                        onClick={this.handleDeleteAccount}
+                        onClick={this.handleDialog(true)}
                     >
                         <ListItemIcon>
                             <Icon>delete_forever</Icon>
@@ -69,6 +79,29 @@ class Settings extends Component {
                         <ListItemText primary="Delete account" secondary={"Delete your account forever"}/>
                     </ListItem>
                 </List>
+                {accountDialog && <AccountSettingsDialog onClose={this.handleToggle('accountDialog')}/>}
+                <Dialog
+                    open={deleteAccountDialog}
+                    keepMounted
+                    onClose={this.handleDialog(false)}
+                >
+                    <DialogTitle >
+                        Warning
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText >
+                            Are you sure you want to delete your account ?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleDialog(false)} color="primary">
+                            No
+                        </Button>
+                        <Button onClick={this.handleDeleteAccount} color="secondary">
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Fragment>
         );
     }

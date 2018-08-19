@@ -1,14 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { withStyles, Card,Icon, CardActions, CardContent, Button, Typography, CardHeader,IconButton, Avatar } from '@material-ui/core/';
+import { withStyles, Card, CardActions, CardContent, Button, Typography, CardHeader, Chip, Avatar } from '@material-ui/core/';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import VoteButtons from './VoteButtons';
 import { withTracker } from 'meteor/react-meteor-data';
 import pluralize from 'pluralize';
+import { genres } from '/imports/ui/config';
 
 const styles = theme => ({
     card: {
+        margin: '5px 0',
     },
     cardContainer: {
         display: 'flex',
@@ -25,6 +27,12 @@ const styles = theme => ({
         textAlign: 'center',
         paddingTop: 10,
     },
+    center:{
+        textAlign: 'center',
+    },
+    genreChip: {
+        margin: '0 5px',
+    }
 });
 
 class PartyCard extends Component {
@@ -46,7 +54,7 @@ class PartyCard extends Component {
         })
     };
     render = () => {
-        const { _id, title, description, joined_users, startDate, endDate, created_at, upvotes, downvotes } = this.props.party;
+        const { _id, title, description, joined_users, startDate, endDate, created_at, genre, upvotes, downvotes } = this.props.party;
         const { classes, user, noVote } = this.props;
         const userIsJoined = this.props.party.joined_users.find(e => e.user_id === Meteor.userId());
         if(!user) return null;
@@ -74,6 +82,9 @@ class PartyCard extends Component {
                         />
                         <Typography variant="headline">{title}</Typography>
                         <Typography variant="subheading" color="textSecondary">{description}</Typography>
+                        <div className={classes.center}>
+                            {genre.map((e, i) => <Chip label={genres[e]} key={i} className={classes.genreChip}/>)}
+                        </div>
                         <Typography variant="body1" className={classes.detail}>
                             <strong>From:</strong> {moment(startDate).format('MMMM Do YYYY, h:mm a')} <strong>to</strong> {moment(endDate).format('MMMM Do YYYY, h:mm a')}
                         </Typography>

@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Parties from '../../db/parties/collection';
-import DeletePartyButton from './DeletePartyButton';
+import DeletePartyDialog from './DeletePartyDialog';
 
 const styles = theme => ({
     drawerWidth: {
@@ -117,7 +117,7 @@ class Drawer extends Component {
                             <Icon>menu</Icon>
                         </IconButton>
                         <Typography variant="title" color="inherit">
-                            Mance
+                            Zound
                         </Typography>
                         {additionalButtons}
                     </Toolbar>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'proptypes';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, FormHelperText } from '@material-ui/core';
 
 class AccountSettingsDialog extends Component {
     state = {
@@ -10,6 +10,8 @@ class AccountSettingsDialog extends Component {
         email: Meteor.user().emails[0].address,
         currentPassword: '',
         newPassword: '',
+        confirmNewPassword: '',
+        error: '',
     };
     static propTypes = {
         onClose: PropTypes.func.isRequired
@@ -19,8 +21,15 @@ class AccountSettingsDialog extends Component {
         setTimeout(() => {this.props.onClose();}, 100);
     };
     handleChange = name => ({ target }) => this.setState({[name]: target.value});
+    handleSave = () => {
+        this.handleClose();
+        Meteor.call('user.updateAccount', this.state, (err, res) => {
+            if(err) this.setState({ error: err.reason });
+            else this.handleClose();
+        });
+    };
     render = () => {
-        const { firstName, lastName, email, currentPassword, newPassword, } = this.state;
+        const { firstName, lastName, email, currentPassword, newPassword, confirmNewPassword, error } = this.state;
         return (
             <Dialog
                 open={this.state.open}
@@ -57,17 +66,34 @@ class AccountSettingsDialog extends Component {
                         margin="dense"
                         label="Current password"
                         type="password"
-                        value={email}
-                        onChange={this.handleChange('email')}
+                        value={currentPassword}
+                        onChange={this.handleChange('currentPassword')}
                         fullWidth
                     />
+                    <TextField
+                        margin="dense"
+                        label="New password"
+                        type="password"
+                        value={newPassword}
+                        onChange={this.handleChange('newPassword')}
+                        fullWidth
+                    />
+                    <TextField
+                        margin="dense"
+                        label="Confirm new password"
+                        type="password"
+                        value={confirmNewPassword}
+                        onChange={this.handleChange('confirmNewPassword')}
+                        fullWidth
+                    />
+                    {error && <FormHelperText error>{error}</FormHelperText>}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={this.handleClose} color="primary">
-                        Subscribe
+                    <Button onClick={this.handleSave} color="primary">
+                        Save
                     </Button>
                 </DialogActions>
             </Dialog>

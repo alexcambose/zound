@@ -1,8 +1,9 @@
 import Parties from './collection';
+import Songs from '../songs/collection';
 
 Meteor.methods({
-    'parties.insert': ({ title, description, genre, startDate, endDate, password }) => {
-        const data = { title, description, genre, startDate, endDate, current_song_id: '', password, joined_users: [{user_id: Meteor.userId(), date: new Date}], user_id: Meteor.userId(), created_at: new Date, upvotes: [], downvotes: [] };
+    'parties.insert': ({ title, description, genre, startDate, endDate, password, color }) => {
+        const data = { title, description, genre, startDate, endDate, current_song_id: '', password, joined_users: [{user_id: Meteor.userId(), date: new Date}], user_id: Meteor.userId(), created_at: new Date, upvotes: [], downvotes: [], color };
         try {
             const validation = Parties.simpleSchema().validate(data);
         }catch(e) {
@@ -10,6 +11,7 @@ Meteor.methods({
         }
 
         Parties.insert(data, (error, result) => {
+            if(error) console.log(error);
             console.log(`New party created with id "${result}"`);
         })
     },
@@ -34,7 +36,7 @@ Meteor.methods({
                 $pull: {
                     [keyInverse]: Meteor.userId(),
                 }
-            })
+            });
         }
     },
     'parties.toggleJoin': (_id, password = null) => { //password is optional, only used at joining
@@ -61,6 +63,7 @@ Meteor.methods({
     'parties.remove': _id =>{
         const party = Parties.findOne({_id});
         if(party.user_id === Meteor.userId()) {
+            Songs.remove({party_id: _id});
             Parties.remove({_id});
             console.log(`User '${Meteor.userId()}' deleted party '${party._id}'`);
         }

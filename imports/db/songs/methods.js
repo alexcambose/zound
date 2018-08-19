@@ -56,7 +56,7 @@ Meteor.methods({
                 $pull: {
                     [keyInverse]: Meteor.userId(),
                 }
-            })
+            });
         }
     },
 });

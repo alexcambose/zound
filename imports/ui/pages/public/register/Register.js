@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import RegisterForm from './RegisterForm';
+import RegisterForm from '../../../forms/RegisterForm';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 

@@ -34,11 +34,11 @@ class Profile extends Component {
         const { classes, user } = this.props;
         const { profile } = user;
 
-        const infoElements = [
-            {icon: 'email', label: user.emails[0].address},
+        let infoElements = [
             {icon: 'account_circle', label: 'Joined ' + moment(user.createdAt).fromNow()},
         ];
 
+        if(!!Meteor.user().profile.settings.publicEmail) infoElements = [{icon: 'email', label: user.emails[0].address}, ...infoElements];
         return (
             <div className={classes.container}>
                 <Avatar

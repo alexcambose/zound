@@ -8,12 +8,15 @@ import publicRoutes from '/imports/ui/routes/public';
 import Container from '/imports/ui/pages/Container';
 import { Redirect } from 'react-router-dom';
 import Drawer from './components/Drawer';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const history = createHashHistory();
 
 class App extends Component {
     static propTypes = {
         user: PropTypes.object,
+        theme: PropTypes.object,
     };
     createRoutes = () => {
         const { user } = this.props;
@@ -29,19 +32,27 @@ class App extends Component {
         );
     };
     render = () => {
-        const { user } = this.props;
+        const { user, theme } = this.props;
         if(user === undefined) return null;
         return (
-            <Router history={history}>
-                <Fragment>
+            <MuiThemeProvider theme={theme}>
+                <CssBaseline/>
+                <Router history={history}>
+                    <Fragment>
                         {user && <Drawer/>}
                         {this.createRoutes()}
-                </Fragment>
-            </Router>
+                    </Fragment>
+                </Router>
+            </MuiThemeProvider>
         );
     }
 }
 
 export default withTracker(() => ({
-    user: Meteor.user()
+    user: Meteor.user(),
+    theme: createMuiTheme({
+        palette: {
+            type: Meteor.user() && Meteor.user().profile.settings.darkTheme ? 'dark' : 'light',
+        },
+    })
 }))(App);

@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'proptypes';
-import { withStyles, Icon, IconButton, CardActions } from '@material-ui/core';
+import { withStyles, Icon, IconButton } from '@material-ui/core';
 
 const styles = theme => ({
     buttonsContainer: {
