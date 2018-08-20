@@ -2,32 +2,40 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
 import DeletePartyDialog from '../../../components/DeletePartyDialog';
 import EditPartyDialog from '../../../components/EditPartyDialog';
-import LeavePartyButton from '../../../components/LeavePartyButton';
+import LeavePartyDialog from '../../../components/LeavePartyDialog';
 import { Icon, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader, Switch } from '@material-ui/core';
 
 class Settings extends Component {
     state = {
         deletePartyDialog: false,
         editPartyDialog: false,
+        leavePartyDialog: false,
     };
     static propTypes = {
         party: PropTypes.object.isRequired,
     };
     render = () => {
         const { party } = this.props;
-        const { deletePartyDialog, editPartyDialog } = this.state;
+        const { deletePartyDialog, editPartyDialog, leavePartyDialog } = this.state;
 
-        if(Meteor.userId() !== party.user_id)
-            return (
-                <Fragment>
-                    <LeavePartyButton party={party}/>
-                </Fragment>
-            );
         return (
-            <div>
+            <Fragment>
+                <LeavePartyDialog party={party} open={leavePartyDialog} onClose={() => this.setState({ leavePartyDialog: false })}/>
                 <DeletePartyDialog party={party} open={deletePartyDialog} onClose={() => this.setState({ deletePartyDialog: false })}/>
                 <EditPartyDialog party={party} open={editPartyDialog} onClose={() => this.setState({ editPartyDialog: false })}/>
-                <Fragment>
+                {Meteor.userId() !== party.user_id ?
+                    <List>
+                        <ListItem
+                            button
+                            onClick={() => this.setState({ leavePartyDialog: true })}
+                        >
+                            <ListItemIcon>
+                                <Icon>undo</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary="Leave party"/>
+                        </ListItem>
+                    </List>
+                    :
                     <List>
                         <ListItem
                             button
@@ -48,8 +56,8 @@ class Settings extends Component {
                             <ListItemText primary="Delete party"/>
                         </ListItem>
                     </List>
-                </Fragment>
-            </div>
+                }
+            </Fragment>
         );
     }
 }

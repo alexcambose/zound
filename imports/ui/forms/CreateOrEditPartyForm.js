@@ -17,6 +17,7 @@ class CreateOrEditPartyForm extends Component {
             password: '',
             color: '#000000',
             error: '',
+            loading: false,
         };
         if(props.party) {
             this.state = {...this.state, ...props.party};
@@ -29,22 +30,31 @@ class CreateOrEditPartyForm extends Component {
     handleChange = name => ({ target }) => this.setState({[name]: target.value});
     handleSubmit = e => {
         e.preventDefault();
+        this.setState({loading: true});
         if(this.props.party) {
-            Meteor.call('parties.update', this.state, (err, res) => {
-
+            Meteor.call('parties.update', this.props.party._id, this.state, (err, res) => {
+                this.setState({loading: false});
+                if(err) {
+                    this.setState({ error: err.reason });
+                } else {
+                    this.props.history.push('/');
+                }
             });
+        } else {
+            Meteor.call('parties.insert', this.state, (err, res) => {
+                this.setState({loading: false});
+                if(err) {
+                    this.setState({ error: err.reason });
+                } else {
+                    this.props.history.push('/');
+                }
+            })
         }
-        Meteor.call('parties.insert', this.state, (err, res) => {
-            if(err) {
-                this.setState({ error: err.reason });
-            } else {
-                this.props.history.push('/');
-            }
-        })
     };
     render = () => {
         const { party } = this.props;
-        const { title, description, genre, startDate, endDate, error, color, password } = this.state;
+        const { title, description, genre, startDate, endDate, error, color, password, loading } = this.state;
+        console.log(startDate.toString(), startDate.toISOString());
         return (
             <form onSubmit={this.handleSubmit}>
                 <TextField
@@ -110,7 +120,7 @@ class CreateOrEditPartyForm extends Component {
                     id="datetime-local"
                     label="Start date"
                     type="datetime-local"
-                    value={startDate.toISOString().slice(0, -8)}
+                    value={moment(startDate).format('YYYY-MM-DDTHH:mm')}
                     onChange={this.handleChange('startDate')}
                     InputLabelProps={{
                         shrink: true,
@@ -122,7 +132,7 @@ class CreateOrEditPartyForm extends Component {
                     id="datetime-local"
                     label="End date"
                     type="datetime-local"
-                    value={endDate.toISOString().slice(0, -8)}
+                    value={moment(endDate).format('YYYY-MM-DDTHH:mm')}
                     onChange={this.handleChange('endDate')}
                     InputLabelProps={{
                         shrink: true,
@@ -158,7 +168,7 @@ class CreateOrEditPartyForm extends Component {
                     fullWidth
                     margin='normal'
                 />
-                <Button variant="contained" fullWidth type="submit">{party ? 'Save' : 'Create'} party</Button>
+                <Button disabled={loading} variant="contained" fullWidth type="submit">{party ? 'Save' : 'Create'} party</Button>
                 {error && <FormHelperText error>{error}</FormHelperText>}
             </form>
         );

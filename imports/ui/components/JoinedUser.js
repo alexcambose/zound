@@ -12,15 +12,18 @@ class JoinedUser extends Component {
         user_id: PropTypes.string.isRequired,
         date: PropTypes.instanceOf(Date).isRequired,
         partyHost: PropTypes.bool,
+        user: PropTypes.object,
     };
     static defaultProps = {
         partyHost: false,
     };
     render = () => {
-        const { user_id, date, users } = this.props;
-        const user = users.find(e => e._id === user_id);
+        const { user_id, date, user, partyHost } = this.props;
+        console.log(user);
+        if(!user) return null;
+
         return (
-            <Card>
+            <Card style={{margin: '5px 0'}}>
                 <CardContent>
                     <CardHeader
                         component={Link}
@@ -30,7 +33,7 @@ class JoinedUser extends Component {
                         title={user.profile.firstName + ' ' + user.profile.lastName}
                         subheader={'joined ' + moment(date).fromNow()}
                     />
-                    <Chip color="primary" label="Host"/>
+                    {partyHost && <Chip color="primary" label="Host"/>}
                 </CardContent>
             </Card>
         );
@@ -38,8 +41,8 @@ class JoinedUser extends Component {
 }
 
 export default withTracker(props => {
-    Meteor.subscribe('users');
+    Meteor.subscribe('user', props.user_id);
     return {
-        users: Meteor.users.find({}).fetch(),
+        user: Meteor.users.findOne({_id: props.user_id}),
     }
 })(JoinedUser);

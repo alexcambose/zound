@@ -88,6 +88,7 @@ class SongSelectButton extends Component {
         onSelected: PropTypes.func,
         title: PropTypes.string,
         dialogTitle: PropTypes.string,
+        color: PropTypes.string,
     };
     static defaultProps = {
         selectButtonLabel: 'Select',
@@ -130,7 +131,7 @@ class SongSelectButton extends Component {
     };
     render = () => {
         const { open, search, expanded, tracksFound, hasError } = this.state;
-        const { classes, selectButtonLabel, title, dialogTitle } = this.props;
+        const { classes, selectButtonLabel, title, dialogTitle, color } = this.props;
 
         if (hasError) return <div>Error!</div>;
         const trackPanels = tracksFound.map((e, i) => (
@@ -184,13 +185,13 @@ class SongSelectButton extends Component {
         ));
         return (
             <Fragment>
-                <Button onClick={this.handleDialog(true)} variant="raised" color="primary" fullWidth>{title}</Button>
+                <Button onClick={this.handleDialog(true)} variant="raised" color="primary" fullWidth style={{backgroundColor: color}}>{title}</Button>
                 <Dialog
                     fullScreen
                     open={open}
                     onClose={this.handleDialog(false)}
                 >
-                    <AppBar className={classes.appBar}>
+                    <AppBar className={classes.appBar} style={{backgroundColor: color}}>
                         <Toolbar>
                             <IconButton color="inherit" onClick={this.handleDialog(false)} aria-label="Close">
                                 <Icon>close</Icon>

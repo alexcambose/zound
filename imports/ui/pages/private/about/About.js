@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'proptypes';
-import { Avatar, withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import { version } from '/package.json';
 
 const styles = {
@@ -12,7 +12,9 @@ const styles = {
         flexDirection: 'column',
     },
     logo: {
-        height: 160,
+        width: '50%',
+        height: 'auto',
+        marginBottom: 30,
     },
     info: {
         fontWeight: 300,

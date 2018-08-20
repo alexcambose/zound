@@ -24,6 +24,7 @@ const styles = {
         marginTop: 10,
     }
 };
+git status
 
 class Profile extends Component {
     static propTypes = {
@@ -32,13 +33,14 @@ class Profile extends Component {
     };
     render = () => {
         const { classes, user } = this.props;
+        if(!user) return null;
         const { profile } = user;
 
         let infoElements = [
             {icon: 'account_circle', label: 'Joined ' + moment(user.createdAt).fromNow()},
         ];
 
-        if(!!Meteor.user().profile.settings.publicEmail) infoElements = [{icon: 'email', label: user.emails[0].address}, ...infoElements];
+        if(!!user.profile.settings.publicEmail) infoElements = [{icon: 'email', label: user.emails[0].address}, ...infoElements];
         return (
             <div className={classes.container}>
                 <Avatar

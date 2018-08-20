@@ -19,6 +19,11 @@ const styles = () => ({
 });
 
 class Party extends Component {
+    constructor(props) {
+        super(props);
+        if(!this.props.match.params.page) props.history.replace('/party/'+props.match.params.id+'/music');
+    }
+
     static propTypes = {
         party: PropTypes.object,
     };
@@ -31,7 +36,7 @@ class Party extends Component {
         if(page === 'music') {
             return <Music party={party}/>;
         } else if(page === 'people') {
-            return <People joined_users={party.joined_users} party={party}/>;
+            return <People party={party}/>;
         } else if(page === 'info') {
             return <Info party={party}/>;
         } else if(page === 'settings') {
@@ -41,8 +46,8 @@ class Party extends Component {
 
     render = () => {
         const { party, classes } = this.props;
-        // if(party === null) return <Redirect to="/"/>; todo
         if(party === null) return null;
+        if(!party.joined_users.find(e => e.user_id === Meteor.userId())) return <Redirect to="/"/>;
         return (
             <div className={classes.container}>
                 {this.renderPage()}

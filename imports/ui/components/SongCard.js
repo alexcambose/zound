@@ -104,7 +104,7 @@ class SongCard extends Component {
         const { anchorEl } = this.state;
         const songData = JSON.parse(song.data);
         return (
-            <Card className={classes.cardElement} raised={isCurrentlyPlaying}>
+            <Card className={classes.cardElement} raised={isCurrentlyPlaying} style={Meteor.userId() === song.user_id ? {border: '1px solid rgba(0,0,0,.5)'} : {}}>
                 <div className={classes.card}>
                     <div className={classes.cardMediaAndContent}>
                         <CardMedia
@@ -125,25 +125,27 @@ class SongCard extends Component {
                             {songData.info.wiki && <Typography className={classes.summary}>{songData.info.wiki.summary}</Typography>}
                         </CardContent>
                     </div>
-                    <IconButton
-                        aria-label="More"
-                        aria-owns={open ? 'long-menu' : null}
-                        aria-haspopup="true"
-                        onClick={this.handleClick}
-                    >
-                        <Icon>more_vert</Icon>
-                    </IconButton>
+                    {
+                        (Meteor.userId() === party.user_id || Meteor.userId() === song.user_id) &&
+                        <IconButton
+                            aria-label="More"
+                            aria-owns={open ? 'long-menu' : null}
+                            aria-haspopup="true"
+                            onClick={this.handleClick}
+                        >
+                            <Icon>more_vert</Icon>
+                        </IconButton>
+                    }
+
                     <Menu
                         id="simple-menu"
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={this.handleClose}
-                        className={classes.menu}
-                    >
+                        className={classes.menu}>
                         {Meteor.userId() === party.user_id && !isCurrentlyPlaying && <MenuItem onClick={this.setAsCurrentSong}><ListItemIcon><Icon>add</Icon></ListItemIcon>Set as current song</MenuItem>}
                         {Meteor.userId() === party.user_id && isCurrentlyPlaying && <MenuItem onClick={this.removeFromPlaying}><ListItemIcon><Icon>voice_over_off</Icon></ListItemIcon>Remove from playing</MenuItem>}
                         {Meteor.userId() === song.user_id && !isCurrentlyPlaying && <MenuItem onClick={this.delete}><ListItemIcon><Icon>delete</Icon></ListItemIcon> Delete</MenuItem>}
-
                     </Menu>
                 </div>
 

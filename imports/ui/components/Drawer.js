@@ -85,7 +85,7 @@ const TopList = () => (
             </ListItemIcon>
             <ListItemText primary="About" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => Meteor.logout()}>
             <ListItemIcon>
                 <Icon>exit_to_app</Icon>
             </ListItemIcon>

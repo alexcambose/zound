@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Parties from '../../../../db/parties/collection';
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom';
-import { Icon, InputAdornment, TextField, Button } from '@material-ui/core';
+import { Icon, InputAdornment, TextField, Button, FormHelperText, Typography } from '@material-ui/core';
 
 class JoinParty extends Component {
     state = {
@@ -19,17 +19,19 @@ class JoinParty extends Component {
     handleChange = name => e => this.setState({ [name]: e.target.value });
     handleSubmit = e => {
         e.preventDefault();
-        Meteor.call('parties.toggleJoin', this.props.party._id, this.state.password, (err, res) => {
+        const partyId = this.props.party._id;
+        Meteor.call('parties.toggleJoin', partyId , this.state.password, (err, res) => {
             if(err) this.setState({ error: err.reason});
-            else this.props.history.push('/');
+            else this.props.history.push('/party/' + partyId);
         });
     };
     render = () => {
         const { party } = this.props;
-        const { password } = this.state;
+        const { password, error } = this.state;
         if(Object.keys(party) === 0) return <Redirect to="/"/>;
         return (
             <form onSubmit={this.handleSubmit}>
+                <Typography variant="display4">{party.title}</Typography>
                 <TextField
                     id="password"
                     type="text"
@@ -46,7 +48,9 @@ class JoinParty extends Component {
                         ),
                     }}
                 />
-                <Button variant="raised" color="primary" type="primary">Join</Button>
+                <Button variant="raised" color="primary" type="primary" fullWidth>Join</Button>
+                {error && <FormHelperText error>{error}</FormHelperText>}
+
             </form>
         );
     }

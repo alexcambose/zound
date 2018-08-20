@@ -1,34 +1,31 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'proptypes';
-import { Button, Icon, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Slide } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 
-class LeavePartyButton extends Component {
-    state = {
-        open: false,
-    };
+class LeavePartyDialog extends Component {
     static propTypes = {
         party: PropTypes.object.isRequired,
+        onClose: PropTypes.func.isRequired,
+        open: PropTypes.bool.isRequired,
     };
     handleLeaveParty = () => {
         Meteor.call('parties.toggleJoin', this.props.party._id, (err, res) => {
             if(err) alert(err);
             else {
-                this.handleDialog(false);
+                this.handleCloseDialog();
             }
         });
     };
-    handleDialog = open => () => this.setState({ open });
+    handleCloseDialog = () => this.props.onClose();
     render = () => {
-        const { party } = this.props;
+        const { party, open } = this.props;
         if(!party) return null;
         return (
             <Fragment>
-                <Button size="small" onClick={this.handleDialog(true)} variant='raised' color="secondary" fullWidth><Icon>undo</Icon> Leave party</Button>
                 <Dialog
-                    open={this.state.open}
-                    TransitionComponent={props => <Slide direction="up" {...props} />}
+                    open={open}
                     keepMounted
-                    onClose={this.handleDialog(false)}
+                    onClose={this.handleCloseDialog}
                 >
                     <DialogTitle id="alert-dialog-slide-title">
                         Warning
@@ -39,7 +36,7 @@ class LeavePartyButton extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDialog(false)} color="primary">
+                        <Button onClick={this.handleCloseDialog} color="primary">
                             No
                         </Button>
                         <Button onClick={this.handleLeaveParty} color="secondary">
@@ -52,4 +49,4 @@ class LeavePartyButton extends Component {
     }
 }
 
-export default LeavePartyButton;
+export default LeavePartyDialog;

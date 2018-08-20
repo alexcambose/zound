@@ -41,7 +41,7 @@ Meteor.methods({
     },
     'parties.toggleJoin': (_id, password = null) => { //password is optional, only used at joining
         const party = Parties.findOne({_id});
-        if(party.joined_users.find(e => e === Meteor.userId())) {
+        if(party.joined_users.find(e => e.user_id === Meteor.userId())) {
             if(Meteor.userId() === party.user_id) throw new Meteor.Error('party-leave', 'Cannot leave party if you created it!');
             Parties.update({_id}, {
                 $pull: {
@@ -67,5 +67,10 @@ Meteor.methods({
             Parties.remove({_id});
             console.log(`User '${Meteor.userId()}' deleted party '${party._id}'`);
         }
+    },
+    'parties.update': (_id, { title, description, genre, startDate, endDate, color, password, }) => {
+        Parties.update({_id}, { $set: {
+            title, description, genre, startDate, endDate, color, password,
+        }});
     }
 });

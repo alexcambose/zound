@@ -102,6 +102,7 @@ class PartyCard extends Component {
 }
 
 export default withTracker(({ party }) => {
+    Meteor.subscribe('user', party.user_id);
     return {
         user: Meteor.users.findOne({_id: party.user_id}),
     }

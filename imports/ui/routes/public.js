@@ -7,16 +7,16 @@ export default [
         path: '/',
         component: Welcome,
         exact: true,
-        inContainer: true,
+        noPadding: true,
     },
     {
         path: '/login',
         component: Login,
-        inContainer: true,
+        noTopPadding: true,
     },
     {
         path: '/register',
         component: Register,
-        inContainer: true,
+        noTopPadding: true,
     },
 ];

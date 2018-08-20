@@ -17,6 +17,7 @@ class RegisterForm extends Component {
         showCPassword: false,
         error: '',
     };
+
     handleChange = name => ({ target }) => this.setState({[name]: target.value});
     handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
     handleClickShowCPassword = () => this.setState({ showCPassword: !this.state.showCPassword });
@@ -135,7 +136,7 @@ class RegisterForm extends Component {
                         )
                     }}
                 />
-                <Button variant="contained" fullWidth type="submit">Register</Button>
+                <Button fullWidth type="submit">Register</Button>
                 {error && <FormHelperText error>{error}</FormHelperText>}
             </form>
         );

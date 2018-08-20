@@ -71,7 +71,7 @@ class LoginFrom extends Component {
                         )
                     }}
                 />
-                <Button variant="contained" fullWidth type="submit">Login</Button>
+                <Button fullWidth type="submit">Login</Button>
                 {error && <FormHelperText error>{error}</FormHelperText>}
 
             </form>

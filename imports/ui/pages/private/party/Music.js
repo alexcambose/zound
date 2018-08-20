@@ -27,7 +27,7 @@ class Music extends Component {
         return (
             <Fragment>
                 <CurrentSongPanel party={party}/>
-                <SongSelectButton onSelected={this.handleSelected} title="Add suggestion"/>
+                <SongSelectButton color={party.color} onSelected={this.handleSelected} title="Add suggestion"/>
                 {songs.length === 0 ?
                     <TextPaper>No suggestions</TextPaper>
                     :

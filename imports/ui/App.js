@@ -22,9 +22,9 @@ class App extends Component {
         const { user } = this.props;
         return (
             <Switch>
-                {(user ? privateRoutes : publicRoutes).map(({ component, ...props}, i) => {
+                {(user ? privateRoutes : publicRoutes).map(({ component, ...configProps}, i) => {
                     const Component = component;
-                        return <Route key={i} {...props} render={props => <Fragment><Container><Component {...props}/></Container></Fragment>}/>;
+                    return <Route key={i} {...configProps} render={props => <Container {...configProps}><Component {...props}/></Container>}/>;
 
                 })}
                 <Route path="/*" render={() => <Redirect to="/"/>}/>
