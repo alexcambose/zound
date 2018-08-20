@@ -1,11 +1,11 @@
 {
-  "name": "mance",
+  "name": "zound",
   "private": true,
   "version": "1.0.0",
   "description": "Animation library that mimics CSS keyframes when scrolling",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexcambose/mance.git"
+    "url": "git+https://github.com/alexcambose/zound.git"
   },
   "keywords": [
     "music",
@@ -18,9 +18,9 @@
   "author": "Alexandru Cambose",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexcambose/mance/issues"
+    "url": "https://github.com/alexcambose/zound/issues"
   },
-  "homepage": "https://github.com/alexcambose/mance#readme",
+  "homepage": "https://github.com/alexcambose/zound#readme",
   "scripts": {
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",

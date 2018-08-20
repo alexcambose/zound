@@ -24,7 +24,7 @@ const styles = {
         marginTop: 10,
     }
 };
-git status
+
 
 class Profile extends Component {
     static propTypes = {
