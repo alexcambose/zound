@@ -41,8 +41,9 @@ const styles = theme => ({
     },
     image: {
         borderRadius: 4,
-        width: 140,
-        height: 140,
+        width: 200,
+        height: 200,
+        marginBottom: 6,
     },
     info: {
         display: 'flex',
@@ -75,6 +76,7 @@ const styles = theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
+        flexDirection: 'column'
     },
     textCenter: {
         textAlign: 'center',

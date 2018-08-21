@@ -14,10 +14,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 const history = createHashHistory();
 
 class App extends Component {
+    state = {
+        offline: !navigator.onLine,
+    };
     static propTypes = {
         user: PropTypes.object,
         theme: PropTypes.object,
     };
+
     createRoutes = () => {
         const { user } = this.props;
         return (
@@ -34,6 +38,7 @@ class App extends Component {
     render = () => {
         const { user, theme } = this.props;
         if(user === undefined) return null;
+        if(this.state.offline) return <h1>You are offline, connect to the internet and restart application!</h1>;
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline/>

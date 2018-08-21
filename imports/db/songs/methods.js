@@ -3,7 +3,6 @@ import Parties from '../parties/collection';
 
 Meteor.methods({
     'songs.add': (party_id, data) => {
-        console.log(JSON.stringify(data));
         Songs.insert({
             user_id: Meteor.userId(),
             data: JSON.stringify(data),

@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/alexcambose/zound#readme",
   "scripts": {
+    "build": "meteor build ./build --directory --server=http://192.168.1.102:1234",
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
@@ -35,6 +36,7 @@
     "history": "^4.7.2",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
+    "material-icons": "^0.2.3",
     "meteor-node-stubs": "^0.4.1",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",

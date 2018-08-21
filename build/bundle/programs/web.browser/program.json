@@ -1,0 +1,89 @@
+{
+  "format": "web-program-pre1",
+  "manifest": [
+    {
+      "path": "bcdeb631111ed3dc3717f4b41e5f50932c115067.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/bcdeb631111ed3dc3717f4b41e5f50932c115067.js?meteor_js_resource=true",
+      "size": 1662519,
+      "hash": "bcdeb631111ed3dc3717f4b41e5f50932c115067"
+    },
+    {
+      "path": "bcdeb631111ed3dc3717f4b41e5f50932c115067.stats.json",
+      "where": "client",
+      "type": "json",
+      "cacheable": true,
+      "url": "/bcdeb631111ed3dc3717f4b41e5f50932c115067.stats.json?meteor_js_resource=true",
+      "size": 60282,
+      "hash": "9f91a962650f3310acab17a4ebe5805cc124df36"
+    },
+    {
+      "path": "5e149c8e1328b1a22246505ee0b907cf4496ec40.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/5e149c8e1328b1a22246505ee0b907cf4496ec40.css?meteor_css_resource=true",
+      "size": 423,
+      "hash": "5e149c8e1328b1a22246505ee0b907cf4496ec40"
+    },
+    {
+      "path": "app/default-user-image.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/default-user-image.png",
+      "size": 1497,
+      "hash": "5cb0cc1c2134c8bb27205def892a60deb73f61d5"
+    },
+    {
+      "path": "app/drawerbg.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/drawerbg.jpg",
+      "size": 129115,
+      "hash": "c1b1cd7bab62912b683e9b2ea251208d33567d56"
+    },
+    {
+      "path": "app/icon.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/icon.png",
+      "size": 4310,
+      "hash": "813d32b004d668b6d7da458b96c863d93112b676"
+    },
+    {
+      "path": "app/logo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/logo.png",
+      "size": 32050,
+      "hash": "d778ea0e4d577c07c77749d8207a684f5ea68226"
+    },
+    {
+      "path": "app/mdi.woff2",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/mdi.woff2",
+      "size": 55208,
+      "hash": "42818ca1a9d18585ab453c1b126303d0021bc831"
+    },
+    {
+      "path": "head.html",
+      "where": "internal",
+      "type": "head",
+      "hash": "523aad341a65c9126abb2f24afd793a85528cf6f"
+    },
+    {
+      "path": "body.html",
+      "where": "internal",
+      "type": "body",
+      "hash": "1b433f33b806b0ddfe84c13b41b6b68881ee49ec"
+    }
+  ]
+}

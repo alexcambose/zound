@@ -8,11 +8,11 @@ import FormHelperText from '@material-ui/core/FormHelperText/';
 
 class RegisterForm extends Component {
     state = {
-        firstName: 'Alex',
-        lastName: 'Cambose',
-        email: 'alexcambose@yahoo.com',
-        password: '1234',
-        cpassword: '1234',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        cpassword: '',
         showPassword: false,
         showCPassword: false,
         error: '',

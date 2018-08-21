@@ -9,8 +9,8 @@ class CreateOrEditPartyForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: 'Jumuleala',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum id mi eget dictum. Proin ut ligula fermentum, mattis justo et, tempor ex. Fusce id erat quis tortor sodales sodales. Nullam quis augue non ante maximus egestas. Ut placerat tellus quis sapien porta lacinia. Nunc efficitur a risus ac rutrum. Quisque fringilla eget justo et efficitur. Quisque nec felis vitae leo tempus suscipit. Nulla facilisis commodo quam sed posuere. Aliquam malesuada fermentum luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean sodales urna vitae convallis vestibulum. Vestibulum quis cursus est. Vivamus vitae cursus quam, vel interdum turpis. Fusce tempus fermentum vestibulum. Aliquam molestie auctor purus, et molestie sapien mollis eu.',
+            title: '',
+            description: '',
             genre: [],
             startDate: new Date,
             endDate: new Date,

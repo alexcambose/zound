@@ -9,8 +9,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 class LoginFrom extends Component {
     state = {
-        email: 'alexcambose@yahoo.com',
-        password: '12345',
+        email: '',
+        password: '',
         showPassword: false,
         error: '',
     };
