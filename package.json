@@ -1,6 +1,5 @@
 {
   "name": "zound",
-  "private": true,
   "version": "1.0.0",
   "description": "Animation library that mimics CSS keyframes when scrolling",
   "repository": {
@@ -22,7 +21,7 @@
   },
   "homepage": "https://github.com/alexcambose/zound#readme",
   "scripts": {
-    "build": "meteor build ./build --directory --server=http://192.168.1.102:1234",
+    "build": "meteor build ./build --directory --server=http://yourserver.com:3000 --verbose",
     "start": "meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",

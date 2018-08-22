@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.alexcamose.zound" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="WebAppLocalServer">
+        <param name="android-package" value="com.meteor.webapp.WebAppLocalServer" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>Zound</name>
+    <description>Listen to your choice</description>
+    <author email="alexcambose@yahoo.com" href="https://alexcambose.ro">Alexandru Cambose</author>
+    <content src="http://localhost:12472/" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="market:*" />
+    <allow-intent href="itms:*" />
+    <allow-intent href="itms-apps:*" />
+    <allow-navigation href="http://localhost" />
+    <access origin="*://server.alexcambose.ro" />
+    <icon height="48" src="resources/android_mdpi.icon.png" width="48" />
+    <icon height="72" src="resources/android_hdpi.icon.png" width="72" />
+    <icon height="96" src="resources/android_xhdpi.icon.png" width="96" />
+    <icon height="144" src="resources/android_xxhdpi.icon.png" width="144" />
+    <icon height="192" src="resources/android_xxxhdpi.icon.png" width="192" />
+    <splash density="port-mdpi" height="480" src="resources/android_mdpi_portrait.splash.png" width="320" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="SplashScreen" value="CDVSplashScreen" />
+    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="FadeSplashScreenDuration" value="250" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarStyle" value="default" />
+</widget>

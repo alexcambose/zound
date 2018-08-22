@@ -13,10 +13,5 @@ App.icons({
     'android_xxhdpi': 'public/icon.png',
     'android_xxxhdpi': 'public/icon.png',
 });
-App.launchScreens({
-    'android_mdpi': 'public/logo.png',
-    'android_hdpi': 'public/logo.png',
-    'android_xhdpi': 'public/logo.png',
-    'android_xxhdpi': 'public/logo.png',
-    'android_xxxhdpi': 'public/logo.png',
-});
+
+App.setPreference('SplashScreen', 'CDVSplashScreen')
