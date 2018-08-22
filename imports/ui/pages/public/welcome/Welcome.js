@@ -49,7 +49,8 @@ const styles = theme => ({
         justifyContent: 'center',
         flexDirection: 'column',
         height: '100%',
-        color: '#fff'
+        color: '#fff',
+	width: '100vw'
     },
     contentLabel: {
         color: '#fff',

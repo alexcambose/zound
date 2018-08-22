@@ -1,6 +1,7 @@
 
 # zound
 ![Zound Logo](https://github.com/alexcambose/zound/blob/master/public/logo.png "Zound logo")
+[Demo](http://alexcambose.com:2001)
 
 ## Installation
 Make sure you have Meteor installed on you machine
@@ -27,4 +28,5 @@ export PATH=$JAVA_HOME/bin:$PATH
 after these steps you should successfully run `npm run build` wich will create a *build* directory (you may need to modify the build script to fit your needs). For more info see official [meteor build docs](https://guide.meteor.com/mobile.html#installing-prerequisites-android).
 ##### IOS
 [Meteor IOS build documentation](https://guide.meteor.com/mobile.html#installing-prerequisites-ios)
+
 
