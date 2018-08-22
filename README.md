@@ -12,8 +12,11 @@ Make sure you have Meteor installed on you machine
 
 ## Building
 #### Development
+
 `meteor run`  - runs a meteor development server
+
 `meteor run android[-device]` - builts and installs the app in emulator or on your device
+
 #### Production
 ##### Android
 Make sure you have Android SDK, Gradle and JDK(preferably [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)), you also need to have `ANDROID_HOME` and `JAVA_HOME`  environment variables set.
