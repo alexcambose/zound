@@ -49,7 +49,7 @@
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
     "react-swipeable-views": "^0.12.16",
-    "simpl-schema": "^1.5.3"
+    "simpl-schema": "^1.10.2"
   },
   "meteor": {
     "mainModule": {
