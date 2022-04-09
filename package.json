@@ -37,7 +37,7 @@
     "lodash": "^4.17.19",
     "material-icons": "^0.2.3",
     "meteor-node-stubs": "^0.4.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.2.2",
     "pluralize": "^7.0.0",
     "proptypes": "^1.1.0",
